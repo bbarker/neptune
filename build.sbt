@@ -7,7 +7,8 @@ lazy val root = (project in file("."))
     scalaJSUseMainModuleInitializer := true,
     libraryDependencies ++= Seq(
       "org.scala-js" %%% "scalajs-dom" % "0.9.1",
-      "com.github.japgolly.scalacss" %%% "core" % "0.5.3"
+      "com.github.japgolly.scalacss" %%% "core" % "0.5.3",
+      "in.nvilla" %%% "monadic-html" % "0.3.2"
     )
   )
 

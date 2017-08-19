@@ -21,7 +21,7 @@ It's pure Scala; even the CSS is written in Scala using [ScalaCSS](https://githu
 
 ## Features
 
-* Pure Scala, no dependencies
+* Pure Scala, no dependencies (except monadic-html, giving us reactive view of the editor)
 * Easily customizable with the Scala CSS DSL
 * No separate CSS file, it's merged inside a single JS file and will be added to document automatically
 
