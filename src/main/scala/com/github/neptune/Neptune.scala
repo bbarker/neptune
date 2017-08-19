@@ -120,35 +120,29 @@ object Neptune {
                 onclick={ (ev: MouseEvent) => action.command() }
         >{ action.icon }</button>
       }
-      }</div>
+    }</div>
 
 
     val content: Var[String] = Var("")
 
     def updateContent(domNode: Div): Unit = {
-      Future[Unit] { //onmount workaround requires wrapping in Future
-        val observerCallback = new Function2[js.Array[MutationRecord], MutationObserver, Unit] {
-          def apply(muts: js.Array[MutationRecord], obs: MutationObserver) = {
-            content := domNode.innerHTML
-          }
-        }
-
-        val contentObserver: MutationObserver = new MutationObserver(observerCallback)
-        val contentObserverParams = new js.Object{
-          val subtree = true
-          val attributes = true
-          val childList =true
-          val characterData = true
-          val characterDataOldValue =true
-        }.asInstanceOf[MutationObserverInit]
-        contentObserver.observe(domNode, contentObserverParams)
+      def observerCallback(muts: js.Array[MutationRecord], obs: MutationObserver): Unit = {
+        content := domNode.innerHTML
       }
-      ()
+      val contentObserver: MutationObserver = new MutationObserver(observerCallback _)
+      val contentObserverParams = new js.Object{
+        val subtree = true
+        val attributes = true
+        val childList =true
+        val characterData = true
+        val characterDataOldValue =true
+      }.asInstanceOf[MutationObserverInit]
+      contentObserver.observe(domNode, contentObserverParams)
     }
 
     val contentStore = <div
       class={NeptuneStyles.neptuneContent.htmlClass}
-      contentEditable="true" onkeydown={preventTab _}
+      contentEditable="true" onkeydown={ preventTab _ }
       mhtml-onmount={ updateContent _ }
     />
 
